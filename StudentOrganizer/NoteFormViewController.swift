@@ -92,4 +92,16 @@ class NoteFormViewController: UIViewController, PHPickerViewControllerDelegate {
             }
         }
     }
+
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "ShowNoteDetailSegue":
+            guard let destination = segue.destination as? NoteDetailViewController,
+                  let note = sender as? Note else { return }
+            destination.note = note
+        default:
+            break
+        }
+    }
 }
