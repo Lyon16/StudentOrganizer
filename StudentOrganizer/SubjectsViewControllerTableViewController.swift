@@ -1,89 +1,103 @@
-//
-//  SubjectsViewControllerTableViewController.swift
-//  StudentOrganizer
-//
-//  Created by MANALO, ELIJAH ELYON on 10/28/26.
-//
-
 import UIKit
-
-class SubjectsViewControllerTableViewController: UITableViewController {
-        
+import CoreData
+  
+class SubjectsViewController: UITableViewController {
+  
+    // MARK: - Properties
+    private var subjects: [Subject] = []
+    private let context = CoreDataStack.shared.context
+  
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        title = "My Subjects"
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+  
+    // Runs every time the screen appears, so the list is always up to date
+    // (for example, after returning from the Tasks screen).
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadSubjects()
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-}
+  
+    // MARK: - Core Data
+    private func loadSubjects() {
+        let request: NSFetchRequest<Subject> = Subject.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        do {
+            subjects = try context.fetch(request)
+        } catch {
+            print("Could not fetch subjects: \(error)")
+            subjects = []
+        }
+        tableView.backgroundView = subjects.isEmpty
+                    ? emptyStateLabel("No subjects yet.\nTap + to add one.") : nil
+                tableView.reloadData()
+            }
+          
+            // MARK: - Actions
+            @IBAction func addSubjectTapped(_ sender: UIBarButtonItem) {
+                let alert = UIAlertController(title: "New Subject",
+                                              message: "Enter the name of the subject.",
+                                              preferredStyle: .alert)
+                alert.addTextField { textField in
+                    textField.placeholder = "e.g., Mobile Application Development 2"
+                    textField.autocapitalizationType = .words
+                }
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                let saveAction = UIAlertAction(title: "Save", style: .default) {
+                    [weak self, weak alert] _ in
+                    // guard: stop quietly if the name is empty (never force-unwrap user input)
+                    guard let self = self,
+                          let name = alert?.textFields?.first?.text?
+                              .trimmingCharacters(in: .whitespacesAndNewlines),
+                          !name.isEmpty else { return }
+          
+                    let subject = Subject(context: self.context)   // create a new row
+                    subject.name = name
+                    subject.createdAt = Date()
+                    CoreDataStack.shared.save()                    // write it to the database
+                    self.loadSubjects()
+                }
+                alert.addAction(saveAction)
+                present(alert, animated: true)
+            }
+          
+            // MARK: - Table view data source
+            override func tableView(_ tableView: UITableView,
+                                    numberOfRowsInSection section: Int) -> Int {
+                return subjects.count
+            }
+          
+            override func tableView(_ tableView: UITableView,
+                                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SubjectCell",
+                                                         for: indexPath)
+                let subject = subjects[indexPath.row]
+          
+                // subject.tasks is an NSSet of TaskItem objects (the relationship we made).
+                let allTasks = subject.tasks as? Set<TaskItem> ?? []
+                let pendingCount = allTasks.filter { !$0.isDone }.count
+          
+                var content = cell.defaultContentConfiguration()
+                content.text = subject.name ?? "Untitled subject"
+                content.secondaryText = "\(pendingCount) pending task(s)"
+                cell.contentConfiguration = content
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            }
+          
+            // MARK: - Table view delegate
+            // Swipe left on a row to delete it.
+            override func tableView(_ tableView: UITableView,
+                                    commit editingStyle: UITableViewCell.EditingStyle,
+                                    forRowAt indexPath: IndexPath) {
+                guard editingStyle == .delete else { return }
+                context.delete(subjects[indexPath.row])   // cascade: tasks and notes go too
+                CoreDataStack.shared.save()
+                subjects.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.backgroundView = subjects.isEmpty
+                    ? emptyStateLabel("No subjects yet.\nTap + to add one.") : nil
+            }
+        } 
