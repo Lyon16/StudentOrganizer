@@ -47,23 +47,8 @@
                             <outlet property="delegate" destination="b34-Fy-cZr" id="cZ8-0J-0nW"/>
                         </connections>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem systemItem="add" id="Dom-Ul-vAb"/>
-                    </toolbarItems>
                     <navigationItem key="navigationItem" id="SXH-em-8us">
-                        <centerItemGroups>
-                            <barButtonItemGroup customizationDisposition="fixed" id="l8U-62-Tcd">
-                                <barButtonItems>
-                                    <barButtonItem title="Item" id="ZZp-Xe-EaS"/>
-                                </barButtonItems>
-                            </barButtonItemGroup>
-                        </centerItemGroups>
                         <rightBarButtonItems>
-                            <barButtonItem title="Notes" id="yr4-ev-y8s">
-                                <connections>
-                                    <segue destination="qm1-Lf-9LR" kind="show" id="qtX-7M-2xf"/>
-                                </connections>
-                            </barButtonItem>
                             <barButtonItem systemItem="add" id="Bfa-cK-9LO">
                                 <connections>
                                     <action selector="addSubjectTapped:" destination="b34-Fy-cZr" id="nu9-fr-TDA"/>
@@ -78,23 +63,39 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uyn-Bw-vcL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1564.1221374045801" y="-114.08450704225352"/>
+            <point key="canvasLocation" x="1352" y="-114"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="lxn-YH-89v">
             <objects>
-                <tableViewController id="4AG-Ha-8Dc" sceneMemberID="viewController">
+                <tableViewController id="4AG-Ha-8Dc" customClass="TasksViewController" customModule="StudentOrganizer" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="QFQ-x2-DU4">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="FRE-3b-yja">
-                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TaskCell" textLabel="w5P-1A-0nL" detailTextLabel="mTn-2B-7qK" style="IBUITableViewCellStyleSubtitle" id="FRE-3b-yja">
+                                <rect key="frame" x="0.0" y="50" width="393" height="46.66666793823242"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FRE-3b-yja" id="K8A-m4-NzV">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="46.66666793823242"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="w5P-1A-0nL">
+                                            <rect key="frame" x="20" y="6" width="40" height="20"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mTn-2B-7qK">
+                                            <rect key="frame" x="20" y="24" width="80" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -103,15 +104,114 @@
                             <outlet property="delegate" destination="4AG-Ha-8Dc" id="AP1-Ev-SzN"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="kPB-S6-rUs"/>
+                    <navigationItem key="navigationItem" id="kPB-S6-rUs">
+                        <leftBarButtonItems>
+                            <barButtonItem title="Notes" id="YqR-9m-2zH">
+                                <connections>
+                                    <action selector="notesTapped:" destination="4AG-Ha-8Dc" id="VfN-4c-8sQ"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="PzK-6d-3xM">
+                                <connections>
+                                    <action selector="addTaskTapped:" destination="4AG-Ha-8Dc" id="DqL-7n-1wR"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <segue destination="qm1-Lf-9LR" kind="show" identifier="ShowTaskFormSegue" id="tNz-pF-l6L"/>
-                        <segue destination="KkK-rz-NbD" kind="show" id="qV6-zr-7an"/>
+                        <segue destination="nVC-1a-2bC" kind="show" identifier="ShowNotesSegue" id="RzN-5u-8cL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7le-8F-04h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2518" y="-114"/>
+            <point key="canvasLocation" x="2286" y="-114"/>
+        </scene>
+        <!--Notes View Controller-->
+        <scene sceneID="nVC-scene-001">
+            <objects>
+                <viewController id="nVC-1a-2bC" customClass="NotesViewController" customModule="StudentOrganizer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nVC-view-001">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nVC-collection-01">
+                                <rect key="frame" x="0.0" y="103" width="393" height="700"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="12" minimumInteritemSpacing="12" id="nVC-layout-01">
+                                    <size key="itemSize" width="128" height="168"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="12" minY="12" maxX="12" maxY="12"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NoteCell" id="nVC-cell-01" customClass="NoteCell" customModule="StudentOrganizer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="168"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="nVC-content-01">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="168"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="nVC-image-01">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Note" numberOfLines="2" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nVC-label-01">
+                                                    <rect key="frame" x="8" y="132" width="112" height="32"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="nVC-image-01" firstAttribute="top" secondItem="nVC-content-01" secondAttribute="top" id="nVC-c01"/>
+                                                <constraint firstItem="nVC-image-01" firstAttribute="leading" secondItem="nVC-content-01" secondAttribute="leading" id="nVC-c02"/>
+                                                <constraint firstItem="nVC-content-01" firstAttribute="trailing" secondItem="nVC-image-01" secondAttribute="trailing" id="nVC-c03"/>
+                                                <constraint firstItem="nVC-image-01" firstAttribute="width" secondItem="nVC-image-01" secondAttribute="height" multiplier="1:1" id="nVC-c04"/>
+                                                <constraint firstItem="nVC-label-01" firstAttribute="top" secondItem="nVC-image-01" secondAttribute="bottom" constant="4" id="nVC-c05"/>
+                                                <constraint firstItem="nVC-label-01" firstAttribute="leading" secondItem="nVC-content-01" secondAttribute="leading" constant="8" id="nVC-c06"/>
+                                                <constraint firstItem="nVC-content-01" firstAttribute="trailing" secondItem="nVC-label-01" secondAttribute="trailing" constant="8" id="nVC-c07"/>
+                                                <constraint firstItem="nVC-content-01" firstAttribute="bottom" secondItem="nVC-label-01" secondAttribute="bottom" constant="4" id="nVC-c08"/>
+                                            </constraints>
+                                        </view>
+                                        <connections>
+                                            <outlet property="photoImageView" destination="nVC-image-01" id="nVC-outlet-01"/>
+                                            <outlet property="noteLabel" destination="nVC-label-01" id="nVC-outlet-02"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="nVC-1a-2bC" id="nVC-data-01"/>
+                                    <outlet property="delegate" destination="nVC-1a-2bC" id="nVC-delegate-01"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="nVC-safe-01"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="nVC-collection-01" firstAttribute="top" secondItem="nVC-safe-01" secondAttribute="top" id="nVC-vc01"/>
+                            <constraint firstItem="nVC-collection-01" firstAttribute="leading" secondItem="nVC-safe-01" secondAttribute="leading" id="nVC-vc02"/>
+                            <constraint firstItem="nVC-safe-01" firstAttribute="trailing" secondItem="nVC-collection-01" secondAttribute="trailing" id="nVC-vc03"/>
+                            <constraint firstItem="nVC-safe-01" firstAttribute="bottom" secondItem="nVC-collection-01" secondAttribute="bottom" id="nVC-vc04"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="nVC-nav-01">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="nVC-add-01">
+                            <connections>
+                                <action selector="addNoteTapped:" destination="nVC-1a-2bC" id="nVC-action-01"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="nVC-collection-01" id="nVC-outlet-03"/>
+                        <segue destination="f8w-oL-cfX" kind="show" identifier="ShowNoteFormSegue" id="nVC-segue-01"/>
+                        <segue destination="KkK-rz-NbD" kind="show" identifier="ShowNoteDetailSegue" id="nVC-segue-02"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nVC-first-01" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3239" y="-115"/>
         </scene>
         <!--Task Form View Controller-->
         <scene sceneID="vjt-Lr-4iR">
@@ -170,7 +270,7 @@
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="7rc-t0-kj4">
                                         <rect key="frame" x="0.0" y="552" width="353" height="32"/>
                                         <segments>
-                                            <segment title="First"/>
+                                            <segment title="Low"/>
                                             <segment title="Medium"/>
                                             <segment title="High"/>
                                         </segments>
@@ -184,7 +284,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2LU-sm-OII">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2LU-sm-OII">
                                                 <rect key="frame" x="304" y="0.0" width="51" height="31"/>
                                             </switch>
                                         </subviews>
@@ -201,7 +301,13 @@
                             <constraint firstItem="xvW-Yn-Kpf" firstAttribute="top" secondItem="eLx-aP-8WS" secondAttribute="top" constant="20" id="aLn-Gq-FaD"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Wy4-7G-DcJ"/>
+                    <navigationItem key="navigationItem" id="Wy4-7G-DcJ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="GmP-4h-9sV">
+                            <connections>
+                                <action selector="saveTapped:" destination="qm1-Lf-9LR" id="JtA-2k-6bN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="completedSwitch" destination="2LU-sm-OII" id="oCf-pw-aku"/>
                         <outlet property="detailsTextField" destination="eBW-Ao-Hyq" id="p8L-DB-3ak"/>
@@ -212,7 +318,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yOX-zt-uhD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3401" y="-114"/>
+            <point key="canvasLocation" x="3239" y="-115"/>
         </scene>
         <!--Note Form View Controller-->
         <scene sceneID="WsY-hy-EPj">
@@ -244,7 +350,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Fa-Mn-S1O">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo (optional)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Fa-Mn-S1O">
                                         <rect key="frame" x="0.0" y="194" width="353" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="l6S-iX-oz6"/>
@@ -266,6 +372,9 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Choose Photo"/>
+                                        <connections>
+                                            <action selector="choosePhotoTapped:" destination="f8w-oL-cfX" id="note-photo-action-01"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -281,7 +390,11 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="kpj-Fj-Cft">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="8uu-Km-ng2"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="8uu-Km-ng2">
+                            <connections>
+                                <action selector="saveTapped:" destination="f8w-oL-cfX" id="note-save-action-01"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -292,7 +405,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DvC-xy-BVl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4335" y="-114"/>
+            <point key="canvasLocation" x="4060" y="-114"/>
         </scene>
         <!--Note Detail View Controller-->
         <scene sceneID="8fq-3Z-kVF">
@@ -333,7 +446,10 @@
                                         </constraints>
                                         <color key="tintColor" systemColor="systemRedColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Delete Note"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Delete Note"/>
+                                        <connections>
+                                            <action selector="deleteTapped:" destination="KkK-rz-NbD" id="note-delete-action-01"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -349,10 +465,15 @@
                     </view>
                     <navigationItem key="navigationItem" id="mE5-UZ-nMh"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="dateLabel" destination="6jH-ZW-Rpg" id="iUx-O1-Ppz"/>
+                        <outlet property="noteLabel" destination="OA2-1V-JSg" id="m7h-Ep-hca"/>
+                        <outlet property="photoImageView" destination="rlt-za-NeE" id="t2e-Zy-cjS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nMy-cM-fWv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5127" y="-114"/>
+            <point key="canvasLocation" x="4876" y="-115"/>
         </scene>
         <!--Subjects View Controller Table View Controller-->
         <scene sceneID="goY-GE-Udk">
@@ -371,12 +492,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="48L-SC-TG9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="637.40458015267177" y="-114.08450704225352"/>
+            <point key="canvasLocation" x="422" y="-114"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="tNz-pF-l6L"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
